@@ -3,4 +3,4 @@ const String baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
 const String currentWeatherUrl =
     'https://api.openweathermap.org/data/2.5/weather';
 
-const String oneCallUrl = 'https://api.openweathermap.org/data/3.0/onecall';
+const String oneCallUrl = 'https://api.openweathermap.org/data/2.5/onecall';
