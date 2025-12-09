@@ -10,5 +10,16 @@ class WeatherModel {
   @HiveField(1)
   final double temp;
 
-  WeatherModel({required this.city, required this.temp});
+  @HiveField(2)
+  final double lat;
+
+  @HiveField(3)
+  final double lon;
+
+  WeatherModel({
+    required this.city,
+    required this.temp,
+    required this.lat,
+    required this.lon,
+  });
 }

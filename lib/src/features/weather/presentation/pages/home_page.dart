@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_weather_app/src/features/weather/data/weather_api.dart';
 import 'package:my_weather_app/src/features/weather/data/weather_repository.dart';
+import 'package:my_weather_app/src/features/weather/presentation/pages/forecast_page.dart';
 import '../../cubit/weather_cubit.dart';
 import '../../cubit/weather_state.dart';
 import '../widgets/weather_card.dart';
@@ -54,7 +55,25 @@ class _BodyState extends State<_Body> {
               if (state.loading) return const CircularProgressIndicator();
               if (state.error != null) return Text('Error: ${state.error}');
               if (state.temp == null) return const Text('Enter a city');
-              return WeatherCard(city: state.city!, temp: state.temp!);
+
+              return Column(
+                children: [
+                  WeatherCard(city: state.city!, temp: state.temp!),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              ForecastPage(lat: state.lat!, lon: state.lon!),
+                        ),
+                      );
+                    },
+                    child: const Text("7-Day Forecast"),
+                  ),
+                ],
+              );
             },
           ),
         ],

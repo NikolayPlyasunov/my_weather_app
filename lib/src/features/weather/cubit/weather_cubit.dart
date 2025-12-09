@@ -11,7 +11,13 @@ class WeatherCubit extends Cubit<WeatherState> {
     try {
       final weather = await repo.getWeather(city);
       emit(
-        state.copyWith(loading: false, temp: weather.temp, city: weather.city),
+        state.copyWith(
+          loading: false,
+          temp: weather.temp,
+          city: weather.city,
+          lat: weather.lat,
+          lon: weather.lon,
+        ),
       );
     } catch (e) {
       emit(state.copyWith(loading: false, error: e.toString()));

@@ -19,17 +19,23 @@ class WeatherModelAdapter extends TypeAdapter<WeatherModel> {
     return WeatherModel(
       city: fields[0] as String,
       temp: fields[1] as double,
+      lat: fields[2] as double,
+      lon: fields[3] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, WeatherModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.city)
       ..writeByte(1)
-      ..write(obj.temp);
+      ..write(obj.temp)
+      ..writeByte(2)
+      ..write(obj.lat)
+      ..writeByte(3)
+      ..write(obj.lon);
   }
 
   @override
