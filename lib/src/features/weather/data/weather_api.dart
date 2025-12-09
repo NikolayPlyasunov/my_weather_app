@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../../core/constants.dart';
 
+
 class WeatherApi {
-  Future<Map<String, dynamic>> fetchWeather(String city) async {
+    Future<Map<String, dynamic>> fetchWeather(String city) async {
     final url = Uri.parse(
       '$baseUrl?q=$city&appid=$openWeatherApiKey&units=metric',
     );
@@ -12,16 +13,22 @@ class WeatherApi {
     return jsonDecode(response.body);
   }
 
-  Future<Map<String, dynamic>> fetchSevenDay(double lat, double lon) async {
-    final url = Uri.parse(
-      '$oneCallUrl?lat=$lat&lon=$lon&exclude=minutely,hourly,alerts&appid=$openWeatherApiKey&units=metric',
+  Future<Map<String, dynamic>> fetchForecast5d(double lat, double lon) async {
+    final url = Uri.https(
+      'api.openweathermap.org',
+      '/data/2.5/forecast',
+      {
+        'lat': lat.toString(),
+        'lon': lon.toString(),
+        'appid': openWeatherApiKey,
+        'units': 'metric',
+      },
     );
 
     final response = await http.get(url);
     if (response.statusCode != 200) {
-      throw Exception('OneCall API error');
+      throw Exception('Forecast API error: ${response.statusCode}');
     }
-
     return jsonDecode(response.body);
   }
 }

@@ -15,7 +15,7 @@ class WeatherCard extends StatelessWidget {
           children: [
             Text(city, style: const TextStyle(fontSize: 24)),
             const SizedBox(height: 8),
-            Text('$temp °C', style: const TextStyle(fontSize: 40)),
+            Text('${temp.round()} °C', style: const TextStyle(fontSize: 40)),
           ],
         ),
       ),

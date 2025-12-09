@@ -9,9 +9,8 @@ class ForecastCubit extends Cubit<ForecastState> {
 
   Future<void> load(double lat, double lon) async {
     emit(state.copyWith(loading: true, error: null));
-
     try {
-      final data = await repo.getSevenDayForecast(lat, lon);
+      final data = await repo.getForecast5d(lat, lon);
       emit(state.copyWith(loading: false, forecast: data));
     } catch (e) {
       emit(state.copyWith(loading: false, error: e.toString()));

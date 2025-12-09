@@ -18,7 +18,7 @@ class ForecastPage extends StatelessWidget {
       create: (_) =>
           ForecastCubit(WeatherRepository(WeatherApi()))..load(lat, lon),
       child: Scaffold(
-        appBar: AppBar(title: const Text("7-Day Forecast")),
+        appBar: AppBar(title: const Text("5-Day Forecast")),
         body: BlocBuilder<ForecastCubit, ForecastState>(
           builder: (context, state) {
             if (state.loading) {
@@ -26,45 +26,29 @@ class ForecastPage extends StatelessWidget {
             }
 
             if (state.error != null) {
-              return Center(child: Text('Error: ${state.error}'));
+              return Center(child: Text(state.error!));
             }
 
-            final list = state.forecast!.daily;
+            final days = state.forecast!.days;
 
-            return ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: list.length,
-              separatorBuilder: (_, __) =>
-                  const Divider(height: 24, thickness: 1),
-              itemBuilder: (_, i) {
-                final day = list[i];
-                final date = DateTime.fromMillisecondsSinceEpoch(day.dt * 1000);
+            return ListView.builder(
+              itemCount: days.length,
+              itemBuilder: (context, i) {
+                final d = days[i];
+                final formatted =
+                    "${d.date.day}.${d.date.month}.${d.date.year}";
 
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${date.day}.${date.month}",
-                      style: const TextStyle(fontSize: 18),
+                return Card(
+                  margin: const EdgeInsets.all(12),
+                  child: ListTile(
+                    leading: Image.network(
+                      "https://openweathermap.org/img/wn/${d.icon}@2x.png",
+                      width: 50,
                     ),
-                    Row(
-                      children: [
-                        Text("${day.minTemp.round()}°"),
-                        const SizedBox(width: 4),
-                        Text(
-                          "${day.maxTemp.round()}°",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Image.network(
-                      "https://openweathermap.org/img/wn/${day.icon}.png",
-                      width: 40,
-                    ),
-                  ],
+                    title: Text(formatted),
+                    subtitle: Text("Min: ${d.minTemp.round()}°C "
+"Max: ${d.maxTemp.round()}°C"),
+                  ),
                 );
               },
             );

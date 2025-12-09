@@ -30,7 +30,7 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
-  final controller = TextEditingController(text: 'London');
+  final controller = TextEditingController(text: 'Chelyabinsk');
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class _BodyState extends State<_Body> {
                         ),
                       );
                     },
-                    child: const Text("7-Day Forecast"),
+                    child: const Text("5-Day Forecast"),
                   ),
                 ],
               );
