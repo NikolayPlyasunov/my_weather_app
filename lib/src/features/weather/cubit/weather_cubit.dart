@@ -15,8 +15,14 @@ class WeatherCubit extends Cubit<WeatherState> {
           loading: false,
           temp: weather.temp,
           city: weather.city,
+          feelsLike: weather.feelsLike,
+          minTemp: weather.minTemp,
+          maxTemp: weather.maxTemp,
+          windSpeed: weather.windSpeed,
+          humidity: weather.humidity,
           lat: weather.lat,
           lon: weather.lon,
+          icon: weather.icon,
         ),
       );
     } catch (e) {

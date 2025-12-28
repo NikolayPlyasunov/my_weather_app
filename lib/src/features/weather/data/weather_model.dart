@@ -16,10 +16,34 @@ class WeatherModel {
   @HiveField(3)
   final double lon;
 
+  @HiveField(4)
+  final double feelsLike;
+
+  @HiveField(5)
+  final double windSpeed;
+
+  @HiveField(6)
+  final int humidity;
+
+  @HiveField(7)
+  final double minTemp;
+
+  @HiveField(8)
+  final double maxTemp;
+
+    @HiveField(9)
+  final String icon;
+
   WeatherModel({
     required this.city,
     required this.temp,
     required this.lat,
     required this.lon,
+    required this.feelsLike,
+    required this.windSpeed,
+    required this.humidity,
+    required this.minTemp,
+    required this.maxTemp,
+    required this.icon,
   });
 }

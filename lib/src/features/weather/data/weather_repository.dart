@@ -17,6 +17,12 @@ class WeatherRepository {
     temp: (data['main']['temp']).toDouble(),
     lat: data['coord']['lat'],
     lon: data['coord']['lon'],
+    feelsLike: (data['main']['feels_like']).toDouble(),
+      windSpeed: (data['wind']['speed']).toDouble(),
+  humidity: data['main']['humidity'],
+  minTemp: (data['main']['temp_min']).toDouble(),
+  maxTemp: (data['main']['temp_max']).toDouble(),
+  icon: data['weather'][0]['icon'],
   );
 }
 
@@ -57,6 +63,7 @@ class WeatherRepository {
         minTemp: minTemp,
         maxTemp: maxTemp,
         icon: icon,
+
       ));
     });
 

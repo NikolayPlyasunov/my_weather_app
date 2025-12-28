@@ -21,7 +21,15 @@ class WeatherModelAdapter extends TypeAdapter<WeatherModel> {
       temp: fields[1] as double,
       lat: fields[2] as double,
       lon: fields[3] as double,
-    );
+      feelsLike: fields[4] as double,
+      windSpeed: fields[5] as double,
+      humidity: fields[6] as int,
+      minTemp: fields[7] as double,
+      maxTemp: fields[8] as double,
+      icon: fields[9] as String,
+
+
+     );
   }
 
   @override

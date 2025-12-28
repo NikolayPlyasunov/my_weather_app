@@ -15,8 +15,22 @@ class HomePage extends StatelessWidget {
     return BlocProvider(
       create: (_) => WeatherCubit(WeatherRepository(WeatherApi())),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Weather Pro')),
-        body: const _Body(),
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text('Weather Pro'),
+          // backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF4FACFE), Color(0xFF00F2FE)],
+            ),
+          ),
+          child: const _Body(),
+        ),
       ),
     );
   }
@@ -45,10 +59,29 @@ class _BodyState extends State<_Body> {
             decoration: const InputDecoration(labelText: 'City'),
           ),
           const SizedBox(height: 12),
-          ElevatedButton(
-            onPressed: () => cubit.load(controller.text),
-            child: const Text('Load Weather'),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => cubit.load(controller.text),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.25),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Center(
+                child: Text(
+                  'Load Weather',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
           ),
+
           const SizedBox(height: 16),
           BlocBuilder<WeatherCubit, WeatherState>(
             builder: (context, state) {
@@ -58,19 +91,61 @@ class _BodyState extends State<_Body> {
 
               return Column(
                 children: [
-                  WeatherCard(city: state.city!, temp: state.temp!),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.25),
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                    child: WeatherCard(
+                      city: state.city!,
+                      temp: state.temp!,
+                      feelsLike: state.feelsLike!,
+                      minTemp: state.minTemp!,
+                      maxTemp: state.maxTemp!,
+                      windSpeed: state.windSpeed!,
+                      humidity: state.humidity!,
+                      icon: state.icon!,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  GestureDetector(
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) =>
-                              ForecastPage(lat: state.lat!, lon: state.lon!),
+                              ForecastPage(lat: state.lat!, lon: state.lon!,),
                         ),
                       );
                     },
-                    child: const Text("5-Day Forecast"),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '5-Day Forecast',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Icon(
+                            Icons.chevron_right,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               );
