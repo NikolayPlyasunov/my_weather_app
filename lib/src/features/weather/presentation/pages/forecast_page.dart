@@ -11,7 +11,6 @@ class ForecastPage extends StatelessWidget {
   final double lat;
   final double lon;
 
-
   const ForecastPage({super.key, required this.lat, required this.lon});
 
   @override
@@ -22,9 +21,24 @@ class ForecastPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('5-Day Forecast'),
-         // backgroundColor: Colors.transparent,
-          elevation: 0,
+            title: const Text('5-Day Forecast',
+             style: TextStyle(
+      color: Colors.white,
+      fontSize: 22,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.5,
+      ),
+      
+          ),
+          flexibleSpace: Container(
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [Color(0xFF4FACFE), Color(0xFF00F2FE)],
+      ),
+    ),
+    
+          ),
+          centerTitle: true,
         ),
         body: Container(
           decoration: const BoxDecoration(
@@ -65,39 +79,40 @@ class ForecastPage extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Image.network(
-                          "https://openweathermap.org/img/wn/${d.icon}@2x.png",
-                          width: 48,
+                        Icon(
+                          mapWeatherIcon(d.icon),
+      color: Colors.white,
+      size: 32,
                         ),
                         const SizedBox(width: 16),
                         Expanded(
                           child: Text(
                             "${_formatDate(d.date)} · ${_weekday(d.date)}",
-  style: const TextStyle(
-    color: Colors.white,
-    fontSize: 18,
-    fontWeight: FontWeight.w500,
-  ),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                        
-          Text(
-  "${d.minTemp.round()}°",
-  style: const TextStyle(
-    color: Color(0xFFB3E5FC), // холодный голубой
-    fontSize: 18,
-    fontWeight: FontWeight.w400,
-  ),
-),
-const SizedBox(width: 10),
-Text(
-  "${d.maxTemp.round()}°",
-  style: const TextStyle(
-    color: Color(0xFFFFF9C4), // тёплый жёлтый
-    fontSize: 20,
-    fontWeight: FontWeight.w500,
-  ),
-),
+                        ),
+
+                        Text(
+                          "${d.minTemp.round()}°",
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 230, 247, 255), // холодный голубой
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          "${d.maxTemp.round()}°",
+                          style: const TextStyle(
+                            color: Color(0xFFFFF9C4), // тёплый жёлтый
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ],
                     ),
                   );

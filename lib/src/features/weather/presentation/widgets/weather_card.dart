@@ -94,7 +94,7 @@ class WeatherCard extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
-            color: isMax ? const Color(0xFFFFF9C4) : const Color(0xFFB3E5FC),
+            color: isMax ? const Color(0xFFFFF9C4) : const Color.fromARGB(255, 230, 247, 255),
           ),
         ),
       ],

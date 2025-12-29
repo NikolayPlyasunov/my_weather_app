@@ -17,9 +17,24 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('Weather Pro'),
-          // backgroundColor: Colors.transparent,
-          elevation: 0,
+          title: const Text('Weather',
+             style: TextStyle(
+      color: Colors.white,
+      fontSize: 22,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.5,
+      ),
+      
+          ),
+          flexibleSpace: Container(
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [Color(0xFF4FACFE), Color(0xFF00F2FE)],
+      ),
+    ),
+    
+          ),
+          centerTitle: true,
         ),
         body: Container(
           decoration: const BoxDecoration(
@@ -54,10 +69,29 @@ class _BodyState extends State<_Body> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          TextField(
-            controller: controller,
-            decoration: const InputDecoration(labelText: 'City'),
-          ),
+        TextField(
+  controller: controller,
+  style: const TextStyle(
+    color: Colors.white,
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+  ),
+  decoration: const InputDecoration(
+    labelText: 'City',
+    labelStyle: TextStyle(
+      color: Colors.white70,
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.white38),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.white),
+    ),
+  ),
+),
+
           const SizedBox(height: 12),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
@@ -87,7 +121,15 @@ class _BodyState extends State<_Body> {
             builder: (context, state) {
               if (state.loading) return const CircularProgressIndicator();
               if (state.error != null) return Text('Error: ${state.error}');
-              if (state.temp == null) return const Text('Enter a city');
+              if (state.temp == null) {
+                return const Text(
+                'Enter a city', 
+                style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w400
+              ),);
+              }
 
               return Column(
                 children: [
