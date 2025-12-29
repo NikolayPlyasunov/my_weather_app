@@ -27,6 +27,7 @@ class WeatherModelAdapter extends TypeAdapter<WeatherModel> {
       minTemp: fields[7] as double,
       maxTemp: fields[8] as double,
       icon: fields[9] as String,
+      country: fields[10] as String,
 
 
      );

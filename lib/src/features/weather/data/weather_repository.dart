@@ -4,27 +4,26 @@ import 'package:my_weather_app/src/features/weather/data/weather_model.dart';
 
 import 'weather_api.dart';
 
-
-
 class WeatherRepository {
   final WeatherApi api;
   WeatherRepository(this.api);
 
   Future<WeatherModel> getWeather(String city) async {
-  final data = await api.fetchWeather(city);
-  return WeatherModel(
-    city: data['name'],
-    temp: (data['main']['temp']).toDouble(),
-    lat: data['coord']['lat'],
-    lon: data['coord']['lon'],
-    feelsLike: (data['main']['feels_like']).toDouble(),
+    final data = await api.fetchWeather(city);
+    return WeatherModel(
+      city: data['name'],
+      temp: (data['main']['temp']).toDouble(),
+      lat: data['coord']['lat'],
+      lon: data['coord']['lon'],
+      feelsLike: (data['main']['feels_like']).toDouble(),
       windSpeed: (data['wind']['speed']).toDouble(),
-  humidity: data['main']['humidity'],
-  minTemp: (data['main']['temp_min']).toDouble(),
-  maxTemp: (data['main']['temp_max']).toDouble(),
-  icon: data['weather'][0]['icon'],
-  );
-}
+      humidity: data['main']['humidity'],
+      minTemp: (data['main']['temp_min']).toDouble(),
+      maxTemp: (data['main']['temp_max']).toDouble(),
+      icon: data['weather'][0]['icon'],
+      country: data['sys']['country'],
+    );
+  }
 
   Future<FiveDayForecastModel> getForecast5d(double lat, double lon) async {
     final data = await api.fetchForecast5d(lat, lon);
@@ -58,13 +57,14 @@ class WeatherRepository {
         int.parse(parts[2]),
       );
 
-      days.add(DailyForecastModel(
-        date: date,
-        minTemp: minTemp,
-        maxTemp: maxTemp,
-        icon: icon,
-
-      ));
+      days.add(
+        DailyForecastModel(
+          date: date,
+          minTemp: minTemp,
+          maxTemp: maxTemp,
+          icon: icon,
+        ),
+      );
     });
 
     days.sort((a, b) => a.date.compareTo(b.date));

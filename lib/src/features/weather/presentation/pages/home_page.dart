@@ -17,22 +17,21 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('Weather',
-             style: TextStyle(
-      color: Colors.white,
-      fontSize: 22,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.5,
-      ),
-      
+          title: const Text(
+            'Weather',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
+            ),
           ),
           flexibleSpace: Container(
-    decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Color(0xFF4FACFE), Color(0xFF00F2FE)],
-      ),
-    ),
-    
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF4FACFE), Color(0xFF00F2FE)],
+              ),
+            ),
           ),
           centerTitle: true,
         ),
@@ -60,6 +59,9 @@ class _Body extends StatefulWidget {
 
 class _BodyState extends State<_Body> {
   final controller = TextEditingController(text: 'Chelyabinsk');
+  bool _isInputValid(String value) {
+    return value.trim().length >= 2;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,33 +71,44 @@ class _BodyState extends State<_Body> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-        TextField(
-  controller: controller,
-  style: const TextStyle(
-    color: Colors.white,
-    fontSize: 18,
-    fontWeight: FontWeight.w400,
-  ),
-  decoration: const InputDecoration(
-    labelText: 'City',
-    labelStyle: TextStyle(
-      color: Colors.white70,
-      fontSize: 18,
-      fontWeight: FontWeight.w400,
-    ),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.white38),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Colors.white),
-    ),
-  ),
-),
+          TextField(
+            controller: controller,
+            onChanged: (_) => setState(() {}),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
+            decoration: const InputDecoration(
+              labelText: 'City',
+              labelStyle: TextStyle(
+                color: Colors.white70,
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white38),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+            ),
+          ),
+          if (!_isInputValid(controller.text))
+            const Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: Text(
+                'Enter at least 2 characters',
+                style: TextStyle(color: Colors.white70, fontSize: 12),
+              ),
+            ),
 
           const SizedBox(height: 12),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () => cubit.load(controller.text),
+            onTap: _isInputValid(controller.text)
+                ? () => cubit.load(controller.text.trim())
+                : null,
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 16),
@@ -120,15 +133,24 @@ class _BodyState extends State<_Body> {
           BlocBuilder<WeatherCubit, WeatherState>(
             builder: (context, state) {
               if (state.loading) return const CircularProgressIndicator();
-              if (state.error != null) return Text('Error: ${state.error}');
+              if (state.error != null) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text(
+                    state.error!,
+                    style: const TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                );
+              }
               if (state.temp == null) {
                 return const Text(
-                'Enter a city', 
-                style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w400
-              ),);
+                  'Enter a city',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
+                );
               }
 
               return Column(
@@ -149,6 +171,7 @@ class _BodyState extends State<_Body> {
                       windSpeed: state.windSpeed!,
                       humidity: state.humidity!,
                       icon: state.icon!,
+                      country: state.country!,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -158,7 +181,7 @@ class _BodyState extends State<_Body> {
                         context,
                         MaterialPageRoute(
                           builder: (_) =>
-                              ForecastPage(lat: state.lat!, lon: state.lon!,),
+                              ForecastPage(lat: state.lat!, lon: state.lon!),
                         ),
                       );
                     },

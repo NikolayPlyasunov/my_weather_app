@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 part 'weather_model.g.dart';
@@ -34,6 +35,10 @@ class WeatherModel {
     @HiveField(9)
   final String icon;
 
+    @HiveField(10)
+  final String country;
+
+
   WeatherModel({
     required this.city,
     required this.temp,
@@ -45,5 +50,6 @@ class WeatherModel {
     required this.minTemp,
     required this.maxTemp,
     required this.icon,
+    required this.country,
   });
 }

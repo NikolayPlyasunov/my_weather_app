@@ -7,6 +7,15 @@ class WeatherCubit extends Cubit<WeatherState> {
   WeatherCubit(this.repo) : super(WeatherState());
 
   Future<void> load(String city) async {
+    final trimmed = city.trim();
+
+  if (trimmed.isEmpty || trimmed.length < 2) {
+    emit(state.copyWith(
+      error: 'Enter a valid city name',
+      loading: false,
+    ));
+    return;
+  }
     emit(state.copyWith(loading: true, error: null));
     try {
       final weather = await repo.getWeather(city);
@@ -23,10 +32,14 @@ class WeatherCubit extends Cubit<WeatherState> {
           lat: weather.lat,
           lon: weather.lon,
           icon: weather.icon,
+          country: weather.country,
         ),
       );
     } catch (e) {
-      emit(state.copyWith(loading: false, error: e.toString()));
+      emit(state.copyWith(
+        loading: false,
+         error: 'City not found',
+         ));
     }
   }
 }

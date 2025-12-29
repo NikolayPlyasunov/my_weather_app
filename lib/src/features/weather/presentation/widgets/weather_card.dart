@@ -10,6 +10,7 @@ class WeatherCard extends StatelessWidget {
   final double windSpeed;
   final int humidity;
   final String icon;
+  final String country;
 
   const WeatherCard({
     super.key,
@@ -21,6 +22,7 @@ class WeatherCard extends StatelessWidget {
     required this.windSpeed,
     required this.humidity,
     required this.icon,
+    required this.country,
   });
 
   @override
@@ -39,7 +41,7 @@ class WeatherCard extends StatelessWidget {
           ),
         ),
         Text(
-          city,
+          '$city, $country',
           style: const TextStyle(
             fontSize: 38,
             fontWeight: FontWeight.w600,

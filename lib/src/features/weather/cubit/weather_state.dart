@@ -11,6 +11,7 @@ class WeatherState {
   final double? minTemp;
   final double? maxTemp;
   final String? icon;
+  final String? country;
 
   WeatherState({
     this.loading = false,
@@ -25,6 +26,7 @@ class WeatherState {
     this.minTemp,
     this.maxTemp,
     this.icon,
+    this.country,
   });
 
   WeatherState copyWith({
@@ -40,6 +42,7 @@ class WeatherState {
     double? minTemp,
     double? maxTemp,
     String? icon,
+    String? country,
   }) => WeatherState(
     loading: loading ?? this.loading,
     temp: temp,
@@ -53,5 +56,6 @@ class WeatherState {
     minTemp: minTemp,
     maxTemp: maxTemp,
     icon: icon,
+    country: country,
   );
 }
